@@ -9,7 +9,8 @@ CREATE TABLE user_information(
 	city_address VARCHAR(255),
 	provincial_address VARCHAR(255),
 	regional_address VARCHAR(255),
-	country VARCHAR(255)
+	country VARCHAR(255),
+	gender varchar(255)
 );
 
 drop table if exists authentication_user;
