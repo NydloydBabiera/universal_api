@@ -1,12 +1,12 @@
 module.exports = function getAllUserUC({ userDataAccess }) {
-    return async function getUsers() {
-    
-        //add new user to DB
-        const result = await userDataAccess.getAllUser();
-        
-        //validation if complete details entities
+  return async function getUsers() {
+    //add new user to DB
+    const result = await userDataAccess.getAllUser();
+    // const userData = result.rows
+    // console.log("result:",userData);
 
-      return result;
-    };
+    //validation if complete details entities
+
+    return result;
   };
-  
+};

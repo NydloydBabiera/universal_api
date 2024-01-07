@@ -82,7 +82,9 @@ module.exports = function userActions({ pool }) {
   }
 
   async function getAllUser() {
-    let sql = `select * from user_information`;
+    let sql = `select CONCAT(first_name,' ',middle_name,' ',last_name) as full_name,
+    *
+    from user_information`;
 
     try {
       let result = await pool.query(sql);

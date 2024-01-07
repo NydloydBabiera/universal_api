@@ -2,6 +2,7 @@ module.exports = function addUser({ addNewUserUC }) {
     return async function post(httpRequest) {
       try {
         const userDetails = httpRequest.body;
+        
 
         // Usecase
         const result = await addNewUserUC(userDetails);
