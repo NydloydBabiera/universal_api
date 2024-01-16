@@ -14,22 +14,25 @@ module.exports = function addUserUC({ userDataAccess }) {
         userDetails.guardianDetails
       );
     }
-
+    let authDetails;
     if (userDetails.projCode == "BHW") {
-      const firstChar = userDetails.userDetails.first_name.charAt(0);
+      const firstChar = userDetails.userDetails.firstName.charAt(0);
       const authenticationDetails = {
         userId: userId,
-        userName: firstChar + userDetails.userDetails.last_name,
-        passwordUser: firstChar + userDetails.userDetails.last_name,
+        userName: firstChar + userDetails.userDetails.lastName,
+        passwordUser: firstChar + userDetails.userDetails.lastName,
         roleUser: userDetails.userDetails.roleUser,
-        projectCode: projCode
+        projectCode: userDetails.projCode,
       };
+      authDetails = await userDataAccess.createUserAuthentication(
+        authenticationDetails
+      );
     }
-    // // const authDetails = await userDataAccess.createUserAuthentication()
-
-    return (newDetails = {
-      newUser,
-      newGuardian,
-    });
+    const newUserDetails = newUser.rows[0];
+    return {
+      message: "Saved successfully!",
+      newUserDetails,
+      addDetails: userDetails.projCode == "DORM" ? newGuardian.rows[0] : authDetails.rows[0],
+    };
   };
 };

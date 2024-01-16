@@ -12,7 +12,7 @@ module.exports = function addUser({ addNewUserUC }) {
               "Content-Type": "application/json",
             },
             status: 201,
-            body: result.rows, //,"Success!"
+            body: result, //,"Success!"
           };
         } else {
           return {
