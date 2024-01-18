@@ -1,11 +1,11 @@
 module.exports = function updatePassword({ updatePasswordUC }) {
     return async function put(httpRequest) {
       try {
-        
+
         const userDetails = httpRequest.body;
 
         // Usecase
-        const result = await userDetails(userDetails);
+        const result = await updatePasswordUC(userDetails);
 
         if (result) {
           return {
