@@ -7,7 +7,7 @@ const logUser = require("./users/logUsersUC");
 const addGuardian = require("./users/addGuardianUC");
 const updateUser = require("./users/updateUserUC");
 const deleteUser = require("./users/deleteUserUC");
-
+const authenticateUser = require("./users/authenticateUserUC");
 // user use-case execution
 const addNewUserUC = addUser({
   userDataAccess,
@@ -17,6 +17,7 @@ const logUserUC = logUser({ userDataAccess });
 const addGuardianUC = addGuardian({ userDataAccess });
 const updateUserUC = updateUser({ userDataAccess });
 const deleteUserUC = deleteUser({ userDataAccess });
+const authenticateUserUC = authenticateUser({ userDataAccess });
 
 module.exports = {
   addNewUserUC,
@@ -24,5 +25,6 @@ module.exports = {
   logUserUC,
   addGuardianUC,
   updateUserUC,
-  deleteUserUC
+  deleteUserUC,
+  authenticateUserUC,
 };

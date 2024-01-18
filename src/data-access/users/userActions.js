@@ -70,10 +70,10 @@ module.exports = function userActions({ pool }) {
     }
   }
 
-  async function loginUser(userAuthentication) {
-    const { userName, userPassword } = userCredentials;
+  async function loginUser(authDetails) {
+    const { userName, userPassword } = authDetails;
 
-    let sql = `select * from user_information where userName = $1 and user_password = $2`;
+    let sql = `select * from authentication_user where user_name = $1 and password_user = $2`;
     let param = [userName, userPassword];
 
     try {
