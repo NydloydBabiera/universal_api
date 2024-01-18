@@ -10,7 +10,8 @@ module.exports = function userActions({ pool }) {
     updateUserDetails,
     updateGuardianDetails,
     deleteGuardian,
-    deleteUser
+    deleteUser,
+    getGuardianUser
   });
 
   async function addNewUser(userDetails) {
@@ -86,10 +87,33 @@ module.exports = function userActions({ pool }) {
   }
 
   async function getAllUser() {
-    let sql = `select CONCAT(first_name,' ',middle_name,' ',last_name) as full_name,
-    *
-    from user_information`;
+    let sql = `select 
+    CONCAT(userInfo.first_name,' ',userInfo.middle_name,' ',userInfo.last_name) as full_name,
+    userInfo.*,
+    auth.*
+    from user_information userInfo
+    inner join authentication_user auth on auth.user_id = userInfo.user_id`;
 
+    try {
+      let result = await pool.query(sql);
+
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function getGuardianUser() {
+    let sql = `select 
+    CONCAT(userInfo.first_name,' ',userInfo.middle_name,' ',userInfo.last_name) as full_name,
+    userInfo.*,
+    CONCAT(guardInfo.first_name,' ',guardInfo.middle_name,' ',guardInfo.last_name) as guardian_full_name,
+    guardInfo.first_name as guardian_first_name,
+	 guardInfo.middle_name as guardian_middle_name,
+	  guardInfo.last_name as guardian_last_name,
+    guardInfo.contactno
+    from user_information userInfo
+    inner join guardian_information guardInfo on guardInfo.user_id = userInfo.user_id`;
     try {
       let result = await pool.query(sql);
 
@@ -234,7 +258,7 @@ module.exports = function userActions({ pool }) {
     }
   }
 
-  async function deleteGuardian(userId){
+  async function deleteGuardian(userId) {
     let sql = `delete from guardian_information WHERE user_id = $1`;
     let param = [userId];
 

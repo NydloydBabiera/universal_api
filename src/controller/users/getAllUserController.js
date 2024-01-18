@@ -1,10 +1,10 @@
 module.exports = function addUser({ getAllUsersUC }) {
     return async function post(httpRequest) {
       try {
-        const userDetails = httpRequest.body;
+        const projectCode = httpRequest.params.id;
 
         // Usecase
-        const result = await getAllUsersUC();
+        const result = await getAllUsersUC(projectCode);
         if (result) {
           return {
             headers: {

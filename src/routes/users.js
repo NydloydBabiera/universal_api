@@ -13,7 +13,7 @@ const {
 } = require("../controller");
 const makeExpressCallback = require("../express-callback");
 router.post("/addUser", makeExpressCallback(addUserController));
-router.get("/getAllUser", makeExpressCallback(getAllUserController));
+router.get("/getAllUser/:id", makeExpressCallback(getAllUserController));
 router.post("/logUser", makeExpressCallback(logUserController));
 router.post("/addGuardian", makeExpressCallback(addGuardianController));
 router.put("/updateUser/:id", makeExpressCallback(updateUserController));
