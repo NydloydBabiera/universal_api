@@ -96,7 +96,6 @@ module.exports = function userActions({ pool }) {
 
     try {
       let result = await pool.query(sql);
-
       return result;
     } catch (error) {
       console.log("ERROR:", error);
@@ -126,8 +125,8 @@ module.exports = function userActions({ pool }) {
   async function updatePassword(userDetails) {
     const { userId, newPassword } = userDetails;
 
-    let sql = `update user_information
-        set user_password = $1
+    let sql = `update authentication_user
+        set password_user = $1
         where user_id = $2
         returning  *`;
 

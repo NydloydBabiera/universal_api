@@ -48,5 +48,6 @@ CREATE TABLE request_information(
 	user_id BIGINT REFERENCES user_information(user_id),
 	request_type VARCHAR(255),
 	reason_request TEXT,
-	med_request VARCHAR(255)
+	med_request VARCHAR(255),
+	 is_approved boolean
 );

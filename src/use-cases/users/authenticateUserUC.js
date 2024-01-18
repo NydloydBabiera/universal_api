@@ -8,6 +8,8 @@ module.exports = function authenticateUserUC({ userDataAccess }) {
     } else {
       msg = "Success!";
     }
-    return { msg, authUser };
+
+    const authData = authUser.rows[0];
+    return { msg, authData };
   };
 };
