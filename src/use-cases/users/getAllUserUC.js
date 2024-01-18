@@ -7,6 +7,6 @@ module.exports = function getAllUserUC({ userDataAccess }) {
 
     //validation if complete details entities
 
-    return result;
+    return {data: result.rows};
   };
 };
