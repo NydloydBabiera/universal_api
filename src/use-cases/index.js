@@ -14,6 +14,7 @@ const updatePassword = require("./users/updatePasswordUC");
 // request use-case directory
 const createRequest = require("./request/createRequestUC");
 const getAllRequest = require("./request/getAllRequestUC");
+const approvalRequest = require("./request/approvalRequestUC");
 
 // user use-case execution
 const addNewUserUC = addUser({
@@ -30,6 +31,7 @@ const updatePasswordUC = updatePassword({ userDataAccess });
 // request use-case execution
 const createRequestUC = createRequest({ requestDataAccess });
 const getAllRequestUC = getAllRequest({ requestDataAccess });
+const approvalRequestUC = approvalRequest({ requestDataAccess });
 
 module.exports = {
   addNewUserUC,
@@ -41,5 +43,6 @@ module.exports = {
   authenticateUserUC,
   updatePasswordUC,
   createRequestUC,
-  getAllRequestUC
+  getAllRequestUC,
+  approvalRequestUC
 };

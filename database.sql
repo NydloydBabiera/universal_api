@@ -56,5 +56,6 @@ drop table if exists approval_request;
 CREATE TABLE approval_request(
 	approval_id SERIAL NOT NULL PRIMARY KEY,
 	request_id BIGINT REFERENCES request_information(request_id),
-	explanation TEXT
+	explanation TEXT,
+	decision_date DATE
 );

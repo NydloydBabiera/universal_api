@@ -9,6 +9,7 @@ const {
   updatePasswordUC,
   createRequestUC,
   getAllRequestUC,
+  approvalRequestUC,
 } = require("../use-cases");
 
 //user controller directory
@@ -24,6 +25,7 @@ const updatePasswordControl = require("./users/updatePasswordController");
 // request controller directory
 const createRequestControl = require("./request/createRequestController");
 const getAllRequestControl = require("./request/getAllRequest");
+const approvalRequestControl = require("./request/approvalRequestController");
 
 //user controller execution
 const addUserController = addUserControl({
@@ -40,6 +42,7 @@ const updatePasswordController = updatePasswordControl({ updatePasswordUC });
 // request controller execution
 const createRequestController = createRequestControl({ createRequestUC });
 const getAllRequestController = getAllRequestControl({ getAllRequestUC });
+const approvalRequestController = approvalRequestControl({ approvalRequestUC });
 
 module.exports = {
   addUserController,
@@ -51,5 +54,6 @@ module.exports = {
   authUserController,
   updatePasswordController,
   createRequestController,
-  getAllRequestController
+  getAllRequestController,
+  approvalRequestController
 };

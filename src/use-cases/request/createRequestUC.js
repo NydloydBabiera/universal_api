@@ -1,7 +1,12 @@
 module.exports = function createRequestUC({ requestDataAccess }) {
   return async function createRequest(requestDetails) {
-    //validation if complete details entities
-    requestDetails.isApproved = false;
+    //validation if limit of medicine exceeds
+    if(requestDetails.requestType.toLowerCase() === "emergency"){
+      requestDetails.isApproved = true;
+    }else{
+      requestDetails.isApproved = false;
+    }
+
     const result = await requestDataAccess.createRequest(requestDetails);
 
     return {
