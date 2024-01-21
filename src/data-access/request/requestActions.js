@@ -2,6 +2,7 @@
 module.exports = function requestActions({ pool }) {
   return Object.freeze({
     createRequest,
+    getAllRequest
   });
 
   async function createRequest(requestDetails) {
@@ -16,6 +17,18 @@ module.exports = function requestActions({ pool }) {
 
     try {
       let result = await pool.query(sql, param);
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  
+  async function getAllRequest() {
+    let sql = `select * from request_information`;
+
+    try {
+      let result = await pool.query(sql);
       return result;
     } catch (error) {
       console.log("ERROR:", error);
