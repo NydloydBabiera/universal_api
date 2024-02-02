@@ -1,5 +1,7 @@
 const express = require("express");
-const { route } = require("..");
+const {
+  route
+} = require("..");
 const router = express.Router();
 
 const {
@@ -15,7 +17,6 @@ const {
 const makeExpressCallback = require("../express-callback");
 router.post("/addUser", makeExpressCallback(addUserController));
 router.get("/getAllUser/:id", makeExpressCallback(getAllUserController));
-router.post("/logUser", makeExpressCallback(logUserController));
 router.post("/addGuardian", makeExpressCallback(addGuardianController));
 router.put("/updateUser/:id", makeExpressCallback(updateUserController));
 router.delete("/deleteUser/:id", makeExpressCallback(deleteUserController));

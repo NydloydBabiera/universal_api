@@ -1,4 +1,6 @@
-module.exports = function userActions({ pool }) {
+module.exports = function userActions({
+  pool
+}) {
   return Object.freeze({
     addNewUser,
     createUserAuthentication,
@@ -54,8 +56,14 @@ module.exports = function userActions({ pool }) {
   }
 
   async function createUserAuthentication(authenticationDetails) {
-    const { userId, userName, passwordUser, roleUser, projectCode } =
-      authenticationDetails;
+    const {
+      userId,
+      userName,
+      passwordUser,
+      roleUser,
+      projectCode
+    } =
+    authenticationDetails;
 
     let sql = `INSERT INTO public.authentication_user(user_id, user_name, password_user, role_user, project_code)
         VALUES ($1, $2, $3, $4, $5);`;
@@ -72,7 +80,10 @@ module.exports = function userActions({ pool }) {
   }
 
   async function loginUser(authDetails) {
-    const { userName, userPassword } = authDetails;
+    const {
+      userName,
+      userPassword
+    } = authDetails;
 
     let sql = `select * from authentication_user where user_name = $1 and password_user = $2`;
     let param = [userName, userPassword];
@@ -123,7 +134,10 @@ module.exports = function userActions({ pool }) {
   }
 
   async function updatePassword(userDetails) {
-    const { userId, newPassword } = userDetails;
+    const {
+      userId,
+      newPassword
+    } = userDetails;
 
     let sql = `update authentication_user
         set password_user = $1
@@ -142,7 +156,11 @@ module.exports = function userActions({ pool }) {
   }
 
   async function createUserLogs(logDetails) {
-    const { userId, timeIn, typeActivity } = logDetails;
+    const {
+      userId,
+      timeIn,
+      typeActivity
+    } = logDetails;
 
     let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity)
     VALUES ($1, CURRENT_TIME, NOW(), $2) RETURNING *`;
@@ -158,9 +176,36 @@ module.exports = function userActions({ pool }) {
     }
   }
 
+  async function getSpecificLog(logDetails) {
+    const {
+      userId,
+      timeIn,
+      typeActivity
+    } = logDetails;
+
+    let sql = `select * from activity_logs
+    where activity_date = DATE(NOW())
+    and user_id = 1`;
+
+    let param = [userId, typeActivity];
+
+    try {
+
+    } catch (error) {
+
+    }
+
+  }
+
   async function addUserGuardian(guardianDetails) {
-    const { userId, firstName, middleName, lastName, contactNo } =
-      guardianDetails;
+    const {
+      userId,
+      firstName,
+      middleName,
+      lastName,
+      contactNo
+    } =
+    guardianDetails;
 
     let sql = `INSERT INTO guardian_information(user_id, first_name, middle_name, last_name, contactNo)
     VALUES ($1, $2, $3, $4, $5) RETURNING *`;
@@ -225,8 +270,15 @@ module.exports = function userActions({ pool }) {
 
   async function updateGuardianDetails(guardianDetails) {
     console.log("UPDATE GUARDIAN");
-    const { userId, firstName, middleName, lastName, contactNo, guardianId } =
-      guardianDetails;
+    const {
+      userId,
+      firstName,
+      middleName,
+      lastName,
+      contactNo,
+      guardianId
+    } =
+    guardianDetails;
 
     let sql = `UPDATE guardian_information
     SET first_name=$2, middle_name=$3, 

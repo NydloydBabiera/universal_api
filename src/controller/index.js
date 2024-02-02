@@ -10,12 +10,12 @@ const {
   createRequestUC,
   getAllRequestUC,
   approvalRequestUC,
+  getAllLogsUC
 } = require("../use-cases");
 
 //user controller directory
 const addUserControl = require("./users/addNewUserController");
 const getAllUserControl = require("./users/getAllUserController");
-const logUserControl = require("./users/logUserController");
 const addGuardianControl = require("./users/addGuardianController");
 const updateUserControl = require("./users/updateGuardianController");
 const deleteUserControl = require("./users/deleteUserController");
@@ -27,22 +27,51 @@ const createRequestControl = require("./request/createRequestController");
 const getAllRequestControl = require("./request/getAllRequest");
 const approvalRequestControl = require("./request/approvalRequestController");
 
+// activity controller directory
+const getAllLogsControl = require("./activityLogs/getAllLogsController")
+const logUserControl = require("./activityLogs/logUserController");
+
 //user controller execution
 const addUserController = addUserControl({
   addNewUserUC,
 });
-const getAllUserController = getAllUserControl({ getAllUsersUC });
-const logUserController = logUserControl({ logUserUC });
-const addGuardianController = addGuardianControl({ addGuardianUC });
-const updateUserController = updateUserControl({ updateUserUC });
-const deleteUserController = deleteUserControl({ deleteUserUC });
-const authUserController = authUserControl({ authenticateUserUC });
-const updatePasswordController = updatePasswordControl({ updatePasswordUC });
+const getAllUserController = getAllUserControl({
+  getAllUsersUC
+});
+const logUserController = logUserControl({
+  logUserUC
+});
+const addGuardianController = addGuardianControl({
+  addGuardianUC
+});
+const updateUserController = updateUserControl({
+  updateUserUC
+});
+const deleteUserController = deleteUserControl({
+  deleteUserUC
+});
+const authUserController = authUserControl({
+  authenticateUserUC
+});
+const updatePasswordController = updatePasswordControl({
+  updatePasswordUC
+});
 
 // request controller execution
-const createRequestController = createRequestControl({ createRequestUC });
-const getAllRequestController = getAllRequestControl({ getAllRequestUC });
-const approvalRequestController = approvalRequestControl({ approvalRequestUC });
+const createRequestController = createRequestControl({
+  createRequestUC
+});
+const getAllRequestController = getAllRequestControl({
+  getAllRequestUC
+});
+const approvalRequestController = approvalRequestControl({
+  approvalRequestUC
+});
+
+// activity logs execution
+const getAllLogsController = getAllLogsControl({
+  getAllLogsUC
+})
 
 module.exports = {
   addUserController,
@@ -55,5 +84,6 @@ module.exports = {
   updatePasswordController,
   createRequestController,
   getAllRequestController,
-  approvalRequestController
+  approvalRequestController,
+  getAllLogsController
 };
