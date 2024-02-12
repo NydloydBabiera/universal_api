@@ -13,7 +13,8 @@ module.exports = function userActions({
     updateGuardianDetails,
     deleteGuardian,
     deleteUser,
-    getGuardianUser
+    getGuardianUser,
+    loginGuardian
   });
 
   async function addNewUser(userDetails) {
@@ -82,10 +83,32 @@ module.exports = function userActions({
   async function loginUser(authDetails) {
     const {
       userName,
-      userPassword
+      userPassword,
+      projectCode
     } = authDetails;
 
-    let sql = `select * from authentication_user where user_name = $1 and password_user = $2`;
+    let sql = `select * from authentication_user where user_name = $1 and password_user = $2 and project_code = $3`;
+    let param = [userName, userPassword, projectCode];
+
+    try {
+      let result = await pool.query(sql, param);
+
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function loginGuardian(authDetails) {
+    const {
+      userName,
+      userPassword,
+      projectCode
+    } = authDetails;
+
+    let sql = `select *, 'user' as role_user from user_information usr
+    inner join guardian_information guard on guard.user_id = usr.user_id
+    where usr.last_name = $1 and guard.contactno = $2`;
     let param = [userName, userPassword];
 
     try {
