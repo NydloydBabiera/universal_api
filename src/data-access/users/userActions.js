@@ -14,7 +14,8 @@ module.exports = function userActions({
     deleteGuardian,
     deleteUser,
     getGuardianUser,
-    loginGuardian
+    loginGuardian,
+    getLatestId
   });
 
   async function addNewUser(userDetails) {
@@ -335,6 +336,19 @@ module.exports = function userActions({
   async function deleteGuardian(userId) {
     let sql = `delete from guardian_information WHERE user_id = $1`;
     let param = [userId];
+
+    try {
+      let result = await pool.query(sql, param);
+
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function getLatestId(){
+    
+    let sql = `select max(user_id) from user_information;`;
 
     try {
       let result = await pool.query(sql, param);

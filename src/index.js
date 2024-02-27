@@ -13,6 +13,9 @@ const server = require("http").createServer(app);
 var userRoute = require("./routes/users");
 var requestRoute = require("./routes/request");
 var activityLogsRoute = require("./routes/activityLogs");
+const {
+  socket_logs
+} = require("./socket.io/connect")
 
 app.use(express.json());
 app.use(
