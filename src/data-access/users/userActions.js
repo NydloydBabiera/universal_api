@@ -1,6 +1,4 @@
-module.exports = function userActions({
-  pool
-}) {
+module.exports = function userActions({ pool }) {
   return Object.freeze({
     addNewUser,
     createUserAuthentication,
@@ -15,7 +13,7 @@ module.exports = function userActions({
     deleteUser,
     getGuardianUser,
     loginGuardian,
-    getLatestId
+    getLatestId,
   });
 
   async function addNewUser(userDetails) {
@@ -30,10 +28,11 @@ module.exports = function userActions({
       regionalAddress,
       country,
       gender,
+      contactno,
     } = userDetails;
 
-    let sql = `INSERT INTO public.user_information(first_name, middle_name, last_name, address_line1, address_line2, city_address, provincial_address, regional_address, country, gender)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *`;
+    let sql = `INSERT INTO public.user_information(first_name, middle_name, last_name, address_line1, address_line2, city_address, provincial_address, regional_address, country, gender, contacno)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11) RETURNING *`;
 
     let param = [
       firstName,
@@ -46,6 +45,7 @@ module.exports = function userActions({
       regionalAddress,
       country,
       gender,
+      contactno,
     ];
 
     try {
@@ -58,14 +58,8 @@ module.exports = function userActions({
   }
 
   async function createUserAuthentication(authenticationDetails) {
-    const {
-      userId,
-      userName,
-      passwordUser,
-      roleUser,
-      projectCode
-    } =
-    authenticationDetails;
+    const { userId, userName, passwordUser, roleUser, projectCode } =
+      authenticationDetails;
 
     let sql = `INSERT INTO public.authentication_user(user_id, user_name, password_user, role_user, project_code)
         VALUES ($1, $2, $3, $4, $5);`;
@@ -82,11 +76,7 @@ module.exports = function userActions({
   }
 
   async function loginUser(authDetails) {
-    const {
-      userName,
-      userPassword,
-      projectCode
-    } = authDetails;
+    const { userName, userPassword, projectCode } = authDetails;
 
     let sql = `select * from authentication_user where user_name = $1 and password_user = $2 and project_code = $3`;
     let param = [userName, userPassword, projectCode];
@@ -101,11 +91,7 @@ module.exports = function userActions({
   }
 
   async function loginGuardian(authDetails) {
-    const {
-      userName,
-      userPassword,
-      projectCode
-    } = authDetails;
+    const { userName, userPassword, projectCode } = authDetails;
 
     let sql = `select *, 'user' as role_user from user_information usr
     inner join guardian_information guard on guard.user_id = usr.user_id
@@ -158,10 +144,7 @@ module.exports = function userActions({
   }
 
   async function updatePassword(userDetails) {
-    const {
-      userId,
-      newPassword
-    } = userDetails;
+    const { userId, newPassword } = userDetails;
 
     let sql = `update authentication_user
         set password_user = $1
@@ -180,11 +163,7 @@ module.exports = function userActions({
   }
 
   async function createUserLogs(logDetails) {
-    const {
-      userId,
-      timeIn,
-      typeActivity
-    } = logDetails;
+    const { userId, timeIn, typeActivity } = logDetails;
 
     let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity)
     VALUES ($1, CURRENT_TIME, NOW(), $2) RETURNING *`;
@@ -201,11 +180,7 @@ module.exports = function userActions({
   }
 
   async function getSpecificLog(logDetails) {
-    const {
-      userId,
-      timeIn,
-      typeActivity
-    } = logDetails;
+    const { userId, timeIn, typeActivity } = logDetails;
 
     let sql = `select * from activity_logs
     where activity_date = DATE(NOW())
@@ -214,22 +189,12 @@ module.exports = function userActions({
     let param = [userId, typeActivity];
 
     try {
-
-    } catch (error) {
-
-    }
-
+    } catch (error) {}
   }
 
   async function addUserGuardian(guardianDetails) {
-    const {
-      userId,
-      firstName,
-      middleName,
-      lastName,
-      contactNo
-    } =
-    guardianDetails;
+    const { userId, firstName, middleName, lastName, contactNo } =
+      guardianDetails;
 
     let sql = `INSERT INTO guardian_information(user_id, first_name, middle_name, last_name, contactNo)
     VALUES ($1, $2, $3, $4, $5) RETURNING *`;
@@ -294,15 +259,8 @@ module.exports = function userActions({
 
   async function updateGuardianDetails(guardianDetails) {
     console.log("UPDATE GUARDIAN");
-    const {
-      userId,
-      firstName,
-      middleName,
-      lastName,
-      contactNo,
-      guardianId
-    } =
-    guardianDetails;
+    const { userId, firstName, middleName, lastName, contactNo, guardianId } =
+      guardianDetails;
 
     let sql = `UPDATE guardian_information
     SET first_name=$2, middle_name=$3, 
@@ -346,8 +304,7 @@ module.exports = function userActions({
     }
   }
 
-  async function getLatestId(){
-    
+  async function getLatestId() {
     let sql = `select max(user_id) from user_information;`;
 
     try {

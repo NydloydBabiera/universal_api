@@ -3,11 +3,11 @@ module.exports = function authenticateUserUC({ userDataAccess }) {
     //validation if complete details entities
     let msg;
     let authUser;
-    console.log(authDetails)
     if (
-      authDetails.projectCode.toLowerCase() == "DORM" &&
-      authDetails.userName != "admin"
+      authDetails.projectCode.toLowerCase() === "dorm" &&
+      authDetails.userName !== "admin"
     ) {
+      
       authUser = await userDataAccess.loginGuardian(authDetails);
     } else {
       authUser = await userDataAccess.loginUser(authDetails);

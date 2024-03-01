@@ -10,7 +10,8 @@ CREATE TABLE user_information(
 	provincial_address VARCHAR(255),
 	regional_address VARCHAR(255),
 	country VARCHAR(255),
-	gender varchar(255)
+	gender varchar(255),
+	contacno VARCHAR(255)
 );
 
 drop table if exists authentication_user;
@@ -39,7 +40,8 @@ CREATE TABLE guardian_information(
 	user_id BIGINT REFERENCES user_information(user_id),
 	first_name VARCHAR(255),
 	middle_name VARCHAR(255),
-	last_name VARCHAR(255)
+	last_name VARCHAR(255),
+	contactno VARCHAR(255)
 );
 
 drop table if exists request_information;
