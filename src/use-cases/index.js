@@ -15,6 +15,7 @@ const updatePassword = require("./users/updatePasswordUC");
 const createRequest = require("./request/createRequestUC");
 const getAllRequest = require("./request/getAllRequestUC");
 const approvalRequest = require("./request/approvalRequestUC");
+const getUserRequest = require("./request/getUserRequestUC");
 
 // activity logs directory
 const getAllLogs = require("./activityLogs/getAllLogsUC");
@@ -54,6 +55,7 @@ const getAllRequestUC = getAllRequest({
 const approvalRequestUC = approvalRequest({
   requestDataAccess
 });
+const getUserRequestUC = getUserRequest({requestDataAccess})
 
 // activity logs use-case execution
 const getAllLogsUC = getAllLogs({
@@ -74,5 +76,6 @@ module.exports = {
   createRequestUC,
   getAllRequestUC,
   approvalRequestUC,
-  getAllLogsUC
+  getAllLogsUC,
+  getUserRequestUC
 };

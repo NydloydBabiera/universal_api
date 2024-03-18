@@ -10,7 +10,8 @@ const {
   createRequestUC,
   getAllRequestUC,
   approvalRequestUC,
-  getAllLogsUC
+  getAllLogsUC,
+  getUserRequestUC
 } = require("../use-cases");
 
 //user controller directory
@@ -26,6 +27,7 @@ const updatePasswordControl = require("./users/updatePasswordController");
 const createRequestControl = require("./request/createRequestController");
 const getAllRequestControl = require("./request/getAllRequest");
 const approvalRequestControl = require("./request/approvalRequestController");
+const getUserRequestControl = require("./request/getUserRequest")
 
 // activity controller directory
 const getAllLogsControl = require("./activityLogs/getAllLogsController")
@@ -67,6 +69,7 @@ const getAllRequestController = getAllRequestControl({
 const approvalRequestController = approvalRequestControl({
   approvalRequestUC
 });
+const getUserRequestController = getUserRequestControl({getUserRequestUC})
 
 // activity logs execution
 const getAllLogsController = getAllLogsControl({
@@ -85,5 +88,6 @@ module.exports = {
   createRequestController,
   getAllRequestController,
   approvalRequestController,
-  getAllLogsController
+  getAllLogsController,
+  getUserRequestController
 };

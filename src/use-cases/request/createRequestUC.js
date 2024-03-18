@@ -3,8 +3,6 @@ module.exports = function createRequestUC({ requestDataAccess }) {
     //validation if limit of medicine exceeds
     if(requestDetails.requestType.toLowerCase() === "emergency"){
       requestDetails.isApproved = true;
-    }else{
-      requestDetails.isApproved = false;
     }
 
     const result = await requestDataAccess.createRequest(requestDetails);

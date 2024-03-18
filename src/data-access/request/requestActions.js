@@ -4,6 +4,8 @@ module.exports = function requestActions({ pool }) {
     getAllRequest,
     approvalExplanation,
     approvalRequest,
+    getUserRequest,
+    updateRequest
   });
 
   async function createRequest(requestDetails) {
@@ -34,6 +36,34 @@ module.exports = function requestActions({ pool }) {
       console.log("ERROR:", error);
     }
   }
+
+  async function getUserRequest(user_id){
+
+    let sql = `select * from request_information
+    where user_id = $1 and is_consume is null`;
+let param = [user_id];
+    try {
+      let result = await pool.query(sql, param);
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function updateRequest(user_id){
+
+    let sql = `update request_information
+    set is_consume = true
+    where user_id = $1 and is_consume is null;`;
+let param = [user_id];
+    try {
+      let result = await pool.query(sql, param);
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
 
   async function approvalRequest(requestDetails) {
     const { isApproved, requestId } = requestDetails;
