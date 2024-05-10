@@ -68,14 +68,17 @@ module.exports = function activityLogsActions({
 
     }
 
-    async function updateUserLogs(userId) {
-
+    async function updateUserLogs(logDetails) {
+        const {
+            userId,
+            timePunch
+        } = logDetails;
         let sql = `update activity_logs
-        set time_out = CURRENT_TIME
+        set time_out = $2
         where user_id = $1
         and time_out is null RETURNING *;`
 
-        let param = [userId]
+        let param = [userId, timePunch]
 
         try {
             let result = await pool.query(sql, param);
