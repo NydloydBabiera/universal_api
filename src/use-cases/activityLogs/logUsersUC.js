@@ -1,3 +1,5 @@
+const moment = require('moment-timezone');
+
 module.exports = function logUsersUC({
   activityLogsDataAccess
 }) {
@@ -8,8 +10,9 @@ module.exports = function logUsersUC({
     if (isLogExist.rowCount > 0) {
       logUser = await activityLogsDataAccess.updateUserLogs(logDetails.userId)
     } else {
-
+      const manilaTimezone = 'Asia/Manila';
       logDetails.typeActivity = "DORMLOG";
+      logDetails.timePunch  = moment.tz(new Date(), manilaTimezone).format();
       logUser = await activityLogsDataAccess.createUserLogs(logDetails);
     }
     return logUser;
