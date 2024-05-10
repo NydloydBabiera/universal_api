@@ -4,6 +4,7 @@ module.exports = function logUsersUC({
   activityLogsDataAccess
 }) {
   return async function logUser(logDetails) {
+    console.log("logdetails:",logDetails);
     //validation if complete details entities
     let logUser;
     const isLogExist = await activityLogsDataAccess.checkLogsExist(logDetails.userId);
@@ -12,7 +13,7 @@ module.exports = function logUsersUC({
     } else {
       const manilaTimezone = 'Asia/Manila';
       logDetails.typeActivity = "DORMLOG";
-      logDetails.timePunch  = moment.tz(new Date(), manilaTimezone).format();
+      logDetails.timePunch  = moment.tz(new Date(), manilaTimezone).format('HH:mm:ss');
       logUser = await activityLogsDataAccess.createUserLogs(logDetails);
     }
     return logUser;

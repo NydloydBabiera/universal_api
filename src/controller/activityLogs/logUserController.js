@@ -1,4 +1,4 @@
-module.exports = function addUser({ logUserUC }) {
+module.exports = function addUser({   logUserUC }) {
     return async function post(httpRequest) {
       try {
         const logDetails = httpRequest.body;
