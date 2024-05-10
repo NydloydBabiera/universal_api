@@ -30,14 +30,14 @@ module.exports = function activityLogsActions({
     async function createUserLogs(logDetails) {
         const {
             userId,
-            timeIn,
+            timePunch,
             typeActivity
         } = logDetails;
 
         let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity)
-        VALUES ($1, CURRENT_TIME, NOW(), $2) RETURNING *`;
+        VALUES ($1, $3, NOW(), $2) RETURNING *`;
 
-        let param = [userId, typeActivity];
+        let param = [userId, typeActivity, timePunch];
 
         try {
             let result = await pool.query(sql, param);
