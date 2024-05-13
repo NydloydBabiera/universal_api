@@ -51,7 +51,8 @@ CREATE TABLE request_information(
 	request_type VARCHAR(255),
 	reason_request TEXT,
 	med_request VARCHAR(255),
-	 is_approved boolean
+	 is_approved boolean,
+	quantity int
 );
 
 drop table if exists approval_request;
@@ -60,4 +61,13 @@ CREATE TABLE approval_request(
 	request_id BIGINT REFERENCES request_information(request_id),
 	explanation TEXT,
 	decision_date DATE
+);
+
+drop table if exists medicine_stocks;
+CREATE TABLE medicine_stocks(
+	med_stocks_id SERIAL NOT NULL PRIMARY KEY,
+	med_name VARCHAR(255),
+	item_code int,
+	description TEXT,
+	stock_count int
 );
