@@ -13,6 +13,7 @@ const server = require("http").createServer(app);
 var userRoute = require("./routes/users");
 var requestRoute = require("./routes/request");
 var activityLogsRoute = require("./routes/activityLogs");
+var inventoryRoute = require("./routes/inventory")
 const {
   socket_logs
 } = require("./socket.io/connect")
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use("/user", userRoute);
 app.use("/request", requestRoute);
 app.use("/activityLogs", activityLogsRoute);
+app.use("/inventory", inventoryRoute);
 app.use(express.static(path.join(__dirname, "public")));
 
 const httpServer = app.listen(process.env.PORT, () => {

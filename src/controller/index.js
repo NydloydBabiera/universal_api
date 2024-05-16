@@ -11,7 +11,9 @@ const {
   getAllRequestUC,
   approvalRequestUC,
   getAllLogsUC,
-  getUserRequestUC
+  getUserRequestUC,
+  getAllStocksUC,
+  updateStocksUC,
 } = require("../use-cases");
 
 //user controller directory
@@ -27,54 +29,62 @@ const updatePasswordControl = require("./users/updatePasswordController");
 const createRequestControl = require("./request/createRequestController");
 const getAllRequestControl = require("./request/getAllRequest");
 const approvalRequestControl = require("./request/approvalRequestController");
-const getUserRequestControl = require("./request/getUserRequest")
+const getUserRequestControl = require("./request/getUserRequest");
 
 // activity controller directory
-const getAllLogsControl = require("./activityLogs/getAllLogsController")
+const getAllLogsControl = require("./activityLogs/getAllLogsController");
 const logUserControl = require("./activityLogs/logUserController");
+
+//inventory controller directory
+const getAllStocksControl = require("./inventory/getAllStocksController");
+const updateStocksControl = require("./inventory/updateStocksController");
 
 //user controller execution
 const addUserController = addUserControl({
   addNewUserUC,
 });
 const getAllUserController = getAllUserControl({
-  getAllUsersUC
+  getAllUsersUC,
 });
 const logUserController = logUserControl({
-  logUserUC
+  logUserUC,
 });
 const addGuardianController = addGuardianControl({
-  addGuardianUC
+  addGuardianUC,
 });
 const updateUserController = updateUserControl({
-  updateUserUC
+  updateUserUC,
 });
 const deleteUserController = deleteUserControl({
-  deleteUserUC
+  deleteUserUC,
 });
 const authUserController = authUserControl({
-  authenticateUserUC
+  authenticateUserUC,
 });
 const updatePasswordController = updatePasswordControl({
-  updatePasswordUC
+  updatePasswordUC,
 });
 
 // request controller execution
 const createRequestController = createRequestControl({
-  createRequestUC
+  createRequestUC,
 });
 const getAllRequestController = getAllRequestControl({
-  getAllRequestUC
+  getAllRequestUC,
 });
 const approvalRequestController = approvalRequestControl({
-  approvalRequestUC
+  approvalRequestUC,
 });
-const getUserRequestController = getUserRequestControl({getUserRequestUC})
+const getUserRequestController = getUserRequestControl({ getUserRequestUC });
 
 // activity logs execution
 const getAllLogsController = getAllLogsControl({
-  getAllLogsUC
-})
+  getAllLogsUC,
+});
+
+//inventory execution
+const getAllStocksController = getAllStocksControl({ getAllStocksUC });
+const updateStocksController = updateStocksControl({ updateStocksUC });
 
 module.exports = {
   addUserController,
@@ -89,5 +99,7 @@ module.exports = {
   getAllRequestController,
   approvalRequestController,
   getAllLogsController,
-  getUserRequestController
+  getUserRequestController,
+  getAllStocksController,
+  updateStocksController
 };

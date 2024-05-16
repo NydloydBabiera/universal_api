@@ -17,19 +17,19 @@ module.exports = function getUserRequestUC({ requestDataAccess }) {
     }
     switch (request.rows[0].med_request) {
       case "1":
-        returnMsg = "BIOGESIC";
+        returnMsg = "Paracetamol";
         break;
       case "2":
-        returnMsg = "NEOZEP";
+        returnMsg = "Mefenamic Acid";
         break;
       case "3":
-        returnMsg = "TUSERAN";
+        returnMsg = "Dicycloverine";
         break;
       case "4":
-        returnMsg = "MEFENAMIC";
+        returnMsg = "Antihistamine";
         break;
       case "5":
-        returnMsg = "BIOFLU";
+        returnMsg = "Loperamide";
         break;
       default:
         break;

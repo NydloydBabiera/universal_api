@@ -1,55 +1,68 @@
 module.exports = function inventoryActions({ pool }) {
-    return Object.freeze({ getCurrentStocks, insertItem, updateStocks });
+  return Object.freeze({
+    getCurrentStocks,
+    insertItem,
+    updateStocks,
+    getAllStocks,
+  });
 
-    async function getCurrentStocks(itemCode) {
+  async function getCurrentStocks(itemCode) {
+    let sql = `select * from medicine_stocks where item_code = $1`;
 
-        let sql = `select * from medicine_stocks where item_code = $1`
-
-        let param = [itemCode]
-        try {
-            let result = await pool.query(sql, param);
-            return result;
-        } catch (error) {
-            console.log("ERROR", error);
-        }
+    let param = [itemCode];
+    try {
+      let result = await pool.query(sql, param);
+      return result;
+    } catch (error) {
+      console.log("ERROR", error);
     }
+  }
 
-    async function insertItem(itemDetails) {
-        const { medName, itemCode, description } = itemDetails;
+  async function getAllStocks() {
+    let sql = `select * from medicine_stocks`;
 
-        let sql = `INSERT INTO public.medicine_stocks(med_name, item_code, 
+    try {
+      let result = await pool.query(sql);
+      return result;
+    } catch (error) {
+      console.log("ERROR", error);
+    }
+  }
+
+  async function insertItem(itemDetails) {
+    const { medName, itemCode, description } = itemDetails;
+
+    let sql = `INSERT INTO public.medicine_stocks(med_name, item_code, 
             description)
             VALUES ($1, $2, $3)`;
 
-        let param = [medName, itemCode, description];
+    let param = [medName, itemCode, description];
 
-        try {
-            let result = await pool.query(sql, param);
+    try {
+      let result = await pool.query(sql, param);
 
-            return result;
-        } catch (error) {
-            console.log("ERROR:". error);
-        }
-
+      return result;
+    } catch (error) {
+      console.log("ERROR:".error);
     }
+  }
 
-    async function updateStocks(itemDetails){
-        const {itemCode, newCnt} = itemDetails;
+  async function updateStocks(itemDetails) {
+    console.log("itemDetails")
+    const { itemCode, newCnt } = itemDetails;
 
-        let sql = `UPDATE public.medicine_stocks
+    let sql = `UPDATE public.medicine_stocks
         SET stock_count=$1
-        WHERE item_code = $2`
+        WHERE item_code = $2`;
 
-        let param = [itemCode, newCnt];
+    let param = [itemCode, newCnt];
 
-        try {
-            let result = await pool.query(sql, param)
+    try {
+      let result = await pool.query(sql, param);
 
-            return result;
-        } catch (error) {
-            console.log("ERROR:", error)
-        }
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
     }
-
-
-}
+  }
+};

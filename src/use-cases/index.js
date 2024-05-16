@@ -1,6 +1,7 @@
 const userDataAccess = require("../data-access/users");
 const requestDataAccess = require("../data-access/request");
-const activityLogsDataAccess = require("../data-access/activityLogs")
+const activityLogsDataAccess = require("../data-access/activityLogs");
+const inventoryDataAccess = require("../data-access/inventory");
 
 //user use-case directory
 const addUser = require("./users/addNewUserUC");
@@ -21,49 +22,58 @@ const getUserRequest = require("./request/getUserRequestUC");
 const getAllLogs = require("./activityLogs/getAllLogsUC");
 const logUser = require("./activityLogs/logUsersUC");
 
+//inventory directory
+const getAllStocks = require("./inventory/getAllStocksUC");
+const updateStocks = require("./inventory/updateStocksUC");
+
 // user use-case execution
 const addNewUserUC = addUser({
   userDataAccess,
 });
 const getAllUsersUC = getUsers({
-  userDataAccess
+  userDataAccess,
 });
 
 const addGuardianUC = addGuardian({
-  userDataAccess
+  userDataAccess,
 });
 const updateUserUC = updateUser({
-  userDataAccess
+  userDataAccess,
 });
 const deleteUserUC = deleteUser({
-  userDataAccess
+  userDataAccess,
 });
 const authenticateUserUC = authenticateUser({
-  userDataAccess
+  userDataAccess,
 });
 const updatePasswordUC = updatePassword({
-  userDataAccess
+  userDataAccess,
 });
 
 // request use-case execution
 const createRequestUC = createRequest({
-  requestDataAccess
+  requestDataAccess,
 });
 const getAllRequestUC = getAllRequest({
-  requestDataAccess
+  requestDataAccess,
 });
 const approvalRequestUC = approvalRequest({
-  requestDataAccess
+  requestDataAccess,
 });
-const getUserRequestUC = getUserRequest({requestDataAccess})
+const getUserRequestUC = getUserRequest({ requestDataAccess });
 
 // activity logs use-case execution
 const getAllLogsUC = getAllLogs({
-  activityLogsDataAccess
-})
-const logUserUC = logUser({
-  activityLogsDataAccess
+  activityLogsDataAccess,
 });
+const logUserUC = logUser({
+  activityLogsDataAccess,
+});
+
+//inventory use-case execution
+const getAllStocksUC = getAllStocks({ inventoryDataAccess });
+const updateStocksUC = updateStocks({ inventoryDataAccess });
+
 module.exports = {
   addNewUserUC,
   getAllUsersUC,
@@ -77,5 +87,7 @@ module.exports = {
   getAllRequestUC,
   approvalRequestUC,
   getAllLogsUC,
-  getUserRequestUC
+  getUserRequestUC,
+  getAllStocksUC,
+  updateStocksUC,
 };
