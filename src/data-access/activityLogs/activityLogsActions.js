@@ -14,7 +14,8 @@ module.exports = function activityLogsActions({
             CONCAT(inf.first_name,' ', inf.last_name) as fullName,
             TO_CHAR(logs.time_in, 'HH:MI:SS') as time_in,
             TO_CHAR(logs.time_out, 'HH:MI:SS') as time_out,
-            TO_CHAR(logs.activity_date, 'Month DD, YYYY') as activity_date
+            TO_CHAR(logs.activity_date, 'Month DD, YYYY') as activity_date,
+            inf.user_id as user_id
             from activity_logs logs
             inner join user_information inf on inf.user_id = logs.user_id`
 
