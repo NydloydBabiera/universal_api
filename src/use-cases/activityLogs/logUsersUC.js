@@ -1,22 +1,31 @@
-const moment = require('moment-timezone');
+const moment = require("moment-timezone");
+const dayjs = require("dayjs");
 
-module.exports = function logUsersUC({
-  activityLogsDataAccess
-}) {
+module.exports = function logUsersUC({ activityLogsDataAccess }) {
   return async function logUser(logDetails) {
-    
-    const manilaTimezone = 'Asia/Manila';
+    const manilaTimezone = "Asia/Manila";
     //validation if complete details entities
     let logUser;
-    const isLogExist = await activityLogsDataAccess.checkLogsExist(logDetails.userId);
+    const dateToday = await activityLogsDataAccess.getDateToday();
+    const isLogExist = await activityLogsDataAccess.checkLogsExist(
+      logDetails.userId
+    );
+
+    logDetails.timePunch = moment
+      .tz(new Date(), manilaTimezone)
+      .format("HH:mm:ss");
     if (isLogExist.rowCount > 0) {
-      logDetails.timePunch = moment.tz(new Date(), manilaTimezone).format('HH:mm:ss');
-      logUser = await activityLogsDataAccess.updateUserLogs(logDetails)
+      if (isLogExist.rows[0].log_date != dateToday[0].datetoday) {
+        logDetails.dateOut = dateToday[0].datetoday;
+        logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
+      } else {
+        logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
+      }
     } else {
       logDetails.typeActivity = "DORMLOG";
-      logDetails.timePunch  = moment.tz(new Date(), manilaTimezone).format('HH:mm:ss');
       logUser = await activityLogsDataAccess.createUserLogs(logDetails);
     }
+
     return logUser;
   };
 };

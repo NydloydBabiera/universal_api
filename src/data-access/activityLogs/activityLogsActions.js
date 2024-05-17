@@ -5,7 +5,9 @@ module.exports = function activityLogsActions({
         getAllLogs,
         createUserLogs,
         checkLogsExist,
-        updateUserLogs
+        updateUserLogs,
+        getDateToday,
+        createUserLogsOut
     })
 
     async function getAllLogs() {
@@ -22,6 +24,19 @@ module.exports = function activityLogsActions({
             let result = await pool.query(sql);
 
             return result;
+        } catch (error) {
+            console.log("ERROR:", error);
+        }
+
+    }
+
+    async function getDateToday() {
+        try {
+            let sql = `SELECT TO_CHAR(NOW(), 'YYYY-MM-DD') as dateToday`
+
+            let result = await pool.query(sql);
+
+            return result.rows;
         } catch (error) {
             console.log("ERROR:", error);
         }
@@ -49,9 +64,30 @@ module.exports = function activityLogsActions({
         }
     }
 
+    async function createUserLogsOut(logDetails) {
+        const {
+            userId,
+            timePunch,
+            typeActivity
+        } = logDetails;
+
+        let sql = `INSERT INTO activity_logs(user_id, time_out, activity_date, type_activity)
+        VALUES ($1, $3, NOW(), $2) RETURNING *`;
+
+        let param = [userId, typeActivity, timePunch];
+
+        try {
+            let result = await pool.query(sql, param);
+
+            return result;
+        } catch (error) {
+            console.log("ERROR", error);
+        }
+    }
+
     async function checkLogsExist(userId) {
 
-        let sql = `select * from activity_logs
+        let sql = `select TO_CHAR(activity_date, 'YYYY-MM-DD') as log_date,  * from activity_logs
         where user_id = $1
         and time_out is null`
 
@@ -72,14 +108,16 @@ module.exports = function activityLogsActions({
     async function updateUserLogs(logDetails) {
         const {
             userId,
-            timePunch
+            timePunch,
+            dateOut
         } = logDetails;
         let sql = `update activity_logs
-        set time_out = $2
+        set time_out = $2,
+        activity_date = $3
         where user_id = $1
         and time_out is null RETURNING *;`
 
-        let param = [userId, timePunch]
+        let param = [userId, timePunch,dateOut]
 
         try {
             let result = await pool.query(sql, param);
