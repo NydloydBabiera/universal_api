@@ -19,6 +19,7 @@ module.exports = function logUsersUC({ activityLogsDataAccess }) {
         logDetails.dateOut = dateToday[0].datetoday;
         logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
       } else {
+        logDetails.dateOut = dateToday[0].datetoday;
         logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
       }
     } else {
