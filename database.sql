@@ -71,3 +71,10 @@ CREATE TABLE medicine_stocks(
 	description TEXT,
 	stock_count int
 );
+
+drop table if exists curfew_schedule;
+CREATE TABLE curfew_schedule(
+	curfew_schedule_id SERIAL NOT NULL PRIMARY KEY,
+	curfew_time TIME,
+	description TEXT
+);

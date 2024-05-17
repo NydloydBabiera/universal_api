@@ -7,7 +7,8 @@ module.exports = function activityLogsActions({
         checkLogsExist,
         updateUserLogs,
         getDateToday,
-        createUserLogsOut
+        createUserLogsOut,
+        setCurfewSchedule
     })
 
     async function getAllLogs() {
@@ -117,7 +118,7 @@ module.exports = function activityLogsActions({
         where user_id = $1
         and time_out is null RETURNING *;`
 
-        let param = [userId, timePunch,dateOut]
+        let param = [userId, timePunch, dateOut]
 
         try {
             let result = await pool.query(sql, param);
@@ -127,5 +128,23 @@ module.exports = function activityLogsActions({
             console.log("ERROR", error)
         }
     }
+
+    async function setCurfewSchedule(curfewDetails) {
+        const { curfewTime, description } = curfewDetails;
+
+        let sql = `UPDATE public.curfew_schedule
+        SET curfew_time=$1, description=$2`
+
+        let param = [curfewTime, description]
+        try {
+            let result = await pool.query(sql, param);
+
+            return result
+        } catch (error) {
+            console.log("ERROR", error)
+        }
+    }
+
+
 
 }
