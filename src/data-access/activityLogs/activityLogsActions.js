@@ -8,7 +8,8 @@ module.exports = function activityLogsActions({
         updateUserLogs,
         getDateToday,
         createUserLogsOut,
-        setCurfewSchedule
+        setCurfewSchedule,
+        getCurfew
     })
 
     async function getAllLogs() {
@@ -138,6 +139,19 @@ module.exports = function activityLogsActions({
         let param = [curfewTime, description]
         try {
             let result = await pool.query(sql, param);
+
+            return result
+        } catch (error) {
+            console.log("ERROR", error)
+        }
+    }
+
+    async function getCurfew() {
+
+        let sql = `SELECT * from curfew_schedule`
+
+        try {
+            let result = await pool.query(sql);
 
             return result
         } catch (error) {

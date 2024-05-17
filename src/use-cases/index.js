@@ -22,6 +22,7 @@ const getUserRequest = require("./request/getUserRequestUC");
 const getAllLogs = require("./activityLogs/getAllLogsUC");
 const logUser = require("./activityLogs/logUsersUC");
 const setCurfew = require("./activityLogs/setCurfewUC");
+const getCurfew = require("./activityLogs/getCurfewUC");
 
 //inventory directory
 const getAllStocks = require("./inventory/getAllStocksUC");
@@ -70,7 +71,8 @@ const getAllLogsUC = getAllLogs({
 const logUserUC = logUser({
   activityLogsDataAccess,
 });
-const setCurfewUC = setCurfew({ activityLogsDataAccess })
+const setCurfewUC = setCurfew({ activityLogsDataAccess });
+const getCurfewUC = getCurfew({ activityLogsDataAccess });
 
 //inventory use-case execution
 const getAllStocksUC = getAllStocks({ inventoryDataAccess });
@@ -92,5 +94,6 @@ module.exports = {
   getUserRequestUC,
   getAllStocksUC,
   updateStocksUC,
-  setCurfewUC
+  setCurfewUC,
+  getCurfewUC
 };

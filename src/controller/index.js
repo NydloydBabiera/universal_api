@@ -14,7 +14,8 @@ const {
   getUserRequestUC,
   getAllStocksUC,
   updateStocksUC,
-  setCurfewUC
+  setCurfewUC,
+  getCurfewUC,
 } = require("../use-cases");
 
 //user controller directory
@@ -36,7 +37,7 @@ const getUserRequestControl = require("./request/getUserRequest");
 const getAllLogsControl = require("./activityLogs/getAllLogsController");
 const logUserControl = require("./activityLogs/logUserController");
 const setCurfewControl = require("./activityLogs/setCurfewController");
-
+const getCurfewControl = require("./activityLogs/getCurfewController");
 //inventory controller directory
 const getAllStocksControl = require("./inventory/getAllStocksController");
 const updateStocksControl = require("./inventory/updateStocksController");
@@ -83,7 +84,8 @@ const getUserRequestController = getUserRequestControl({ getUserRequestUC });
 const getAllLogsController = getAllLogsControl({
   getAllLogsUC,
 });
-const setCurfewController = setCurfewControl({ setCurfewUC })
+const setCurfewController = setCurfewControl({ setCurfewUC });
+const getCurfewController = getCurfewControl({ getCurfewUC });
 
 //inventory execution
 const getAllStocksController = getAllStocksControl({ getAllStocksUC });
@@ -105,5 +107,6 @@ module.exports = {
   getUserRequestController,
   getAllStocksController,
   updateStocksController,
-  setCurfewController
+  setCurfewController,
+  getCurfewController,
 };
