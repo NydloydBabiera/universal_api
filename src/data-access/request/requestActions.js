@@ -66,10 +66,10 @@ let param = [user_id];
 
 
   async function approvalRequest(requestDetails) {
-    const { isApproved, requestId } = requestDetails;
-    let sql = `update request_information set is_approved = $1
+    const { isApproved, requestId, quantity } = requestDetails;
+    let sql = `update request_information set is_approved = $1, quantity = $3
     where request_id = $2 RETURNING *`;
-    let param = [isApproved, requestId];
+    let param = [isApproved, requestId, quantity];
 
     try {
       let result = await pool.query(sql, param);

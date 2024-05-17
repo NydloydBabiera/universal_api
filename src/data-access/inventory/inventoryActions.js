@@ -48,12 +48,11 @@ module.exports = function inventoryActions({ pool }) {
   }
 
   async function updateStocks(itemDetails) {
-    console.log("itemDetails")
     const { itemCode, newCnt } = itemDetails;
 
     let sql = `UPDATE public.medicine_stocks
-        SET stock_count=$1
-        WHERE item_code = $2`;
+        SET stock_count= $2
+        WHERE item_code = $1`;
 
     let param = [itemCode, newCnt];
 
