@@ -14,6 +14,7 @@ module.exports = function userActions({ pool }) {
     getGuardianUser,
     loginGuardian,
     getLatestId,
+    deleteLogs,
   });
 
   async function addNewUser(userDetails) {
@@ -295,6 +296,19 @@ module.exports = function userActions({ pool }) {
     let sql = `delete from guardian_information WHERE user_id = $1`;
     let param = [userId];
 
+    try {
+      let result = await pool.query(sql, param);
+
+      return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function deleteLogs(userId) {
+    let sql = `UPDATE TABLE activity_logs set user_id = null WHERE user_id = $1`;
+    let param = [userId];
+    console.log("delete logs");
     try {
       let result = await pool.query(sql, param);
 

@@ -14,7 +14,7 @@ module.exports = function activityLogsActions({
 
     async function getAllLogs() {
         try {
-            let sql = `select 
+            let sql = `selectf 
             CONCAT(inf.first_name,' ', inf.last_name) as fullName,
             TO_CHAR(logs.time_in, 'HH:MI:SS') as time_in,
             TO_CHAR(logs.time_out, 'HH:MI:SS') as time_out,
