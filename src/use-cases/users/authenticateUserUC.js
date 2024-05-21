@@ -3,6 +3,7 @@ module.exports = function authenticateUserUC({ userDataAccess }) {
     //validation if complete details entities
     let msg;
     let authUser;
+    console.log(authDetails )
     if (
       authDetails.projectCode.toLowerCase() === "dorm" &&
       authDetails.userName !== "admin"
@@ -12,7 +13,7 @@ module.exports = function authenticateUserUC({ userDataAccess }) {
     } else {
       authUser = await userDataAccess.loginUser(authDetails);
     }
-    if (authUser.rowCount === 0) {
+    if (!authUser) {
       msg = "User does not exist or wrong credentials";
     } else {
       msg = "Success!";

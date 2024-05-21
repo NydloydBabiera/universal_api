@@ -17,7 +17,7 @@ module.exports = function logUsersUC({ activityLogsDataAccess }) {
     if (isLogExist.rowCount > 0) {
       if (isLogExist.rows[0].log_date != dateToday[0].datetoday) {
         logDetails.dateOut = dateToday[0].datetoday;
-        logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
+        logUser = await activityLogsDataAccess.createUserLogsOut(logDetails);
       } else {
         logDetails.dateOut = dateToday[0].datetoday;
         logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
