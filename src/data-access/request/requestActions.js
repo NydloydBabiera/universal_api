@@ -5,7 +5,8 @@ module.exports = function requestActions({ pool }) {
     approvalExplanation,
     approvalRequest,
     getUserRequest,
-    updateRequest
+    updateRequest,
+    countRequest
   });
 
   async function createRequest(requestDetails) {
@@ -14,13 +15,27 @@ module.exports = function requestActions({ pool }) {
 
     let sql = `INSERT INTO 
       request_information(user_id, request_type, 
-        reason_request, med_request, is_approved)
-      VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+        reason_request, med_request, is_approved, date_request)
+      VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *`;
     let param = [userId, requestType, reasonRequest, medRequest, isApproved];
 
     try {
       let result = await pool.query(sql, param);
       return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function countRequest(user_id) {
+    let sql = `select count(user_id) from request_information 
+    where user_id = $1
+    and date_request = CURRENT_DATE`;
+
+    let param = [user_id];
+    try {
+      let result = await pool.query(sql,param);
+      return result.rows;
     } catch (error) {
       console.log("ERROR:", error);
     }
@@ -37,11 +52,10 @@ module.exports = function requestActions({ pool }) {
     }
   }
 
-  async function getUserRequest(user_id){
-
+  async function getUserRequest(user_id) {
     let sql = `select * from request_information
     where user_id = $1 and is_consume is null`;
-let param = [user_id];
+    let param = [user_id];
     try {
       let result = await pool.query(sql, param);
       return result;
@@ -50,12 +64,11 @@ let param = [user_id];
     }
   }
 
-  async function updateRequest(user_id){
-
+  async function updateRequest(user_id) {
     let sql = `update request_information
     set is_consume = true
     where user_id = $1 and is_consume is null;`;
-let param = [user_id];
+    let param = [user_id];
     try {
       let result = await pool.query(sql, param);
       return result;
@@ -63,7 +76,6 @@ let param = [user_id];
       console.log("ERROR:", error);
     }
   }
-
 
   async function approvalRequest(requestDetails) {
     const { isApproved, requestId, quantity } = requestDetails;
