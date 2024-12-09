@@ -11,7 +11,9 @@ CREATE TABLE user_information(
 	regional_address VARCHAR(255),
 	country VARCHAR(255),
 	gender varchar(255),
-	contacno VARCHAR(255)
+	contacno VARCHAR(255),
+	column course varchar(255),
+	column year varchar(255)
 );
 
 drop table if exists authentication_user;
@@ -77,4 +79,10 @@ CREATE TABLE curfew_schedule(
 	curfew_schedule_id SERIAL NOT NULL PRIMARY KEY,
 	curfew_time TIME,
 	description TEXT
+);
+drop table if exists student_subject_matching;
+CREATE TABLE student_subject_matching(
+	student_subject_matching_id SERIAL NOT NULL PRIMARY KEY,
+	user_id BIGINT REFERENCES user_information(user_id),
+    subject_schedule_id BIGINT REFERENCES subject_schedule(subject_schedule_id)
 );

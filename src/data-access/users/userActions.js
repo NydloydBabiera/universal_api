@@ -18,6 +18,7 @@ module.exports = function userActions({ pool }) {
   });
 
   async function addNewUser(userDetails) {
+    
     const {
       firstName,
       middleName,

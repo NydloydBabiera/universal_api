@@ -1,5 +1,3 @@
-
-
 module.exports = function addUserUC({ userDataAccess }) {
   return async function newUser(userDetails) {
     //validation if complete details entities
@@ -29,11 +27,28 @@ module.exports = function addUserUC({ userDataAccess }) {
         authenticationDetails
       );
     }
+
+    if (userDetails.projCode == "STUDENT") {
+      const firstChar = userDetails.userDetails.firstName.charAt(0);
+      const authenticationDetails = {
+        userId: userId,
+        userName: firstChar + userDetails.userDetails.lastName,
+        passwordUser: firstChar + userDetails.userDetails.lastName,
+        roleUser: userDetails.userDetails.roleUser,
+        projectCode: userDetails.projCode,
+      };
+      authDetails = await userDataAccess.createUserAuthentication(
+        authenticationDetails
+      );
+    }
     const newUserDetails = newUser.rows[0];
     return {
       message: "Saved successfully!",
       newUserDetails,
-      addDetails: userDetails.projCode == "DORM" ? newGuardian.rows[0] : authDetails.rows[0],
+      addDetails:
+        userDetails.projCode == "DORM"
+          ? newGuardian.rows[0]
+          : authDetails.rows[0],
     };
   };
 };

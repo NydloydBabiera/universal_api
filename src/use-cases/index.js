@@ -2,6 +2,7 @@ const userDataAccess = require("../data-access/users");
 const requestDataAccess = require("../data-access/request");
 const activityLogsDataAccess = require("../data-access/activityLogs");
 const inventoryDataAccess = require("../data-access/inventory");
+const subjectDataAccess = require("../data-access/subject");
 
 //user use-case directory
 const addUser = require("./users/addNewUserUC");
@@ -27,6 +28,14 @@ const getCurfew = require("./activityLogs/getCurfewUC");
 //inventory directory
 const getAllStocks = require("./inventory/getAllStocksUC");
 const updateStocks = require("./inventory/updateStocksUC");
+
+// subject directory
+const addSubject = require("./subjects/addNewSubjectUC");
+const getAllSubjects = require("./subjects/getAllSubjectsUC");
+const addSubjectSchedule = require("./subjects/addSubjectSchedule");
+const getAllSubjectSchedule = require("./subjects/getAllSubjectSchedule");
+const addStudentSubject = require("./subjects/addStudentScheduleUC");
+const getStudentSubject = require("./subjects/getStudentSubjectScheduleUC");
 
 // user use-case execution
 const addNewUserUC = addUser({
@@ -78,6 +87,13 @@ const getCurfewUC = getCurfew({ activityLogsDataAccess });
 const getAllStocksUC = getAllStocks({ inventoryDataAccess });
 const updateStocksUC = updateStocks({ inventoryDataAccess });
 
+// subject use-case execution
+const addNewSubjectUC = addSubject({ subjectDataAccess });
+const getAllSubjectUC = getAllSubjects({ subjectDataAccess });
+const addSubjectScheduleUC = addSubjectSchedule({ subjectDataAccess });
+const getAllSubjectScheduleUC = getAllSubjectSchedule({ subjectDataAccess });
+const addStudentSubjectScheduleUC = addStudentSubject({ subjectDataAccess });
+const getStudentSubjectScheduleUC = getStudentSubject({ subjectDataAccess });
 module.exports = {
   addNewUserUC,
   getAllUsersUC,
@@ -95,5 +111,11 @@ module.exports = {
   getAllStocksUC,
   updateStocksUC,
   setCurfewUC,
-  getCurfewUC
+  getCurfewUC,
+  addNewSubjectUC,
+  getAllSubjectUC,
+  addSubjectScheduleUC,
+  getAllSubjectScheduleUC,
+  addStudentSubjectScheduleUC,
+  getStudentSubjectScheduleUC
 };

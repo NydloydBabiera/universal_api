@@ -1,7 +1,5 @@
 const express = require("express");
-const {
-  errorMonitor
-} = require("pg/lib/query");
+const { errorMonitor } = require("pg/lib/query");
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -13,10 +11,9 @@ const server = require("http").createServer(app);
 var userRoute = require("./routes/users");
 var requestRoute = require("./routes/request");
 var activityLogsRoute = require("./routes/activityLogs");
-var inventoryRoute = require("./routes/inventory")
-const {
-  socket_logs
-} = require("./socket.io/connect")
+var inventoryRoute = require("./routes/inventory");
+var subjectRoute = require("./routes/subject");
+const { socket_logs } = require("./socket.io/connect");
 
 app.use(express.json());
 app.use(
@@ -30,6 +27,7 @@ app.use("/user", userRoute);
 app.use("/request", requestRoute);
 app.use("/activityLogs", activityLogsRoute);
 app.use("/inventory", inventoryRoute);
+app.use("/subject", subjectRoute);
 app.use(express.static(path.join(__dirname, "public")));
 
 const httpServer = app.listen(process.env.PORT, () => {

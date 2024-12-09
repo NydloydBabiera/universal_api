@@ -16,6 +16,12 @@ const {
   updateStocksUC,
   setCurfewUC,
   getCurfewUC,
+  addNewSubjectUC,
+  getAllSubjectUC,
+  addSubjectScheduleUC,
+  getAllSubjectScheduleUC,
+  addStudentSubjectScheduleUC,
+  getStudentSubjectScheduleUC,
 } = require("../use-cases");
 
 //user controller directory
@@ -41,6 +47,14 @@ const getCurfewControl = require("./activityLogs/getCurfewController");
 //inventory controller directory
 const getAllStocksControl = require("./inventory/getAllStocksController");
 const updateStocksControl = require("./inventory/updateStocksController");
+
+// subject controller directory
+const addNewSubjectControl = require("./subjects/addSubjectController");
+const getAllSubjectsControl = require("./subjects/getAllSubjectsController");
+const addSubjectScheduleControl = require("./subjects/addSubjectScheduleController");
+const getAllSubjectScheduleControl = require("./subjects/getAllSubjectScheduleController");
+const addStudentSubjectControl = require("./subjects/addStudentSubjectScheduleController");
+const getStudentSubjectScheduleControl = require("./subjects/getStudentSubjectScheduleController");
 
 //user controller execution
 const addUserController = addUserControl({
@@ -91,6 +105,24 @@ const getCurfewController = getCurfewControl({ getCurfewUC });
 const getAllStocksController = getAllStocksControl({ getAllStocksUC });
 const updateStocksController = updateStocksControl({ updateStocksUC });
 
+// subject execution
+const addSubjectController = addNewSubjectControl({ addNewSubjectUC });
+const getAllSubjectsController = getAllSubjectsControl({ getAllSubjectUC });
+const addSubjectScheduleController = addSubjectScheduleControl({
+  addSubjectScheduleUC,
+});
+const getAllSubjectScheduleController = getAllSubjectScheduleControl({
+  getAllSubjectScheduleUC,
+});
+
+const addStudentSubjectController = addStudentSubjectControl({
+  addStudentSubjectScheduleUC,
+});
+
+const getStudentSubjectScheduleController = getStudentSubjectScheduleControl({
+  getStudentSubjectScheduleUC,
+});
+
 module.exports = {
   addUserController,
   getAllUserController,
@@ -109,4 +141,10 @@ module.exports = {
   updateStocksController,
   setCurfewController,
   getCurfewController,
+  addSubjectController,
+  getAllSubjectsController,
+  addSubjectScheduleController,
+  getAllSubjectScheduleController,
+  addStudentSubjectController,
+  getStudentSubjectScheduleController,
 };
