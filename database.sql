@@ -13,7 +13,8 @@ CREATE TABLE user_information(
 	gender varchar(255),
 	contacno VARCHAR(255),
 	column course varchar(255),
-	column year varchar(255)
+	column year varchar(255).
+	rfid varchar(255)
 );
 
 drop table if exists authentication_user;

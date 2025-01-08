@@ -10,6 +10,7 @@ module.exports = function logUsersUC({ activityLogsDataAccess }) {
     const isLogExist = await activityLogsDataAccess.checkLogsExist(
       logDetails.userId
     );
+    // check if there is schedule within this time
 
     logDetails.timePunch = moment
       .tz(new Date(), manilaTimezone)
@@ -23,7 +24,7 @@ module.exports = function logUsersUC({ activityLogsDataAccess }) {
         logUser = await activityLogsDataAccess.updateUserLogs(logDetails);
       }
     } else {
-      logDetails.typeActivity = "DORMLOG";
+      logDetails.typeActivity = "STUDENT";
       logUser = await activityLogsDataAccess.createUserLogs(logDetails);
     }
 

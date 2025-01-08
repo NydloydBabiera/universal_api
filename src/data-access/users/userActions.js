@@ -32,10 +32,11 @@ module.exports = function userActions({ pool }) {
       contactno,
       course,
       year,
+      rfid
     } = userDetails;
 
-    let sql = `INSERT INTO public.user_information(first_name, middle_name, last_name, address_line1, address_line2, city_address, provincial_address, regional_address, country, gender, contacno, course, year)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11,$12,$13) RETURNING *`;
+    let sql = `INSERT INTO public.user_information(first_name, middle_name, last_name, address_line1, address_line2, city_address, provincial_address, regional_address, country, gender, contacno, course, year, rfid)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11,$12,$13,$14) RETURNING *`;
 
     let param = [
       firstName,
@@ -51,6 +52,7 @@ module.exports = function userActions({ pool }) {
       contactno,
       course,
       year,
+      rfid
     ];
 
     try {

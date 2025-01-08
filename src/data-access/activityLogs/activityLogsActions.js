@@ -9,7 +9,8 @@ module.exports = function activityLogsActions({
         getDateToday,
         createUserLogsOut,
         setCurfewSchedule,
-        getCurfew
+        getCurfew,
+        isScheduleExist
     })
 
     async function getAllLogs() {
@@ -49,13 +50,14 @@ module.exports = function activityLogsActions({
         const {
             userId,
             timePunch,
-            typeActivity
+            typeActivity,
+            subject_id
         } = logDetails;
 
-        let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity)
-        VALUES ($1, $3, NOW(), $2) RETURNING *`;
+        let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity, subject_id)
+        VALUES ($1, $3, NOW(), $2, $4) RETURNING *`;
 
-        let param = [userId, typeActivity, timePunch];
+        let param = [userId, typeActivity, timePunch,subject_id];
 
         try {
             let result = await pool.query(sql, param);
@@ -157,6 +159,26 @@ module.exports = function activityLogsActions({
         } catch (error) {
             console.log("ERROR", error)
         }
+    }
+
+    async function isScheduleExist(rfid) {
+        let sql = `select * from student_subject_matching sched
+        inner join user_information student on student.user_id = sched.user_id
+        inner join subject_schedule ON subject_schedule.subject_schedule_id = sched.subject_schedule_id
+        where student.rfid = $1 and start_time <= CURRENT_TIME and end_time >= CURRENT_TIME
+        and day_schedule = TRIM(TO_CHAR(CURRENT_DATE, 'Day'))`
+
+        let param = [rfid]
+
+        try {
+            let result = await pool.query(sql, param);
+
+            return result
+        } catch (error) {
+            console.log("ERROR", error)
+        }
+
+
     }
 
 
