@@ -51,6 +51,7 @@ module.exports = function subjectActions({ pool }) {
   }
 
   async function addSubjectSchedule(scheduleDetails) {
+    console.log(scheduleDetails)
     const { subject_id, start_time, end_time, day, room } = scheduleDetails;
 
     let sql = `INSERT INTO subject_schedule(subject_id, start_time, end_time, day_schedule, room_number)

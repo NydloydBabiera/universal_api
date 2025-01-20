@@ -1,10 +1,8 @@
-module.exports = function addUser({   logUserUC }) {
+module.exports = function addUser({ countUsersUC }) {
     return async function post(httpRequest) {
       try {
-        const logDetails = httpRequest.body;
-
         // Usecase
-        const result = await logUserUC(logDetails);
+        const result = await countUsersUC();
         if (result) {
           return {
             headers: {

@@ -12,7 +12,8 @@ const {
   updateUserController,
   deleteUserController,
   authUserController,
-  updatePasswordController
+  updatePasswordController,
+  countUserController
 } = require("../controller");
 const makeExpressCallback = require("../express-callback");
 router.post("/addUser", makeExpressCallback(addUserController));
@@ -22,4 +23,5 @@ router.put("/updateUser/:id", makeExpressCallback(updateUserController));
 router.delete("/deleteUser/:id", makeExpressCallback(deleteUserController));
 router.post("/authenticate", makeExpressCallback(authUserController));
 router.put("/updatePassword", makeExpressCallback(updatePasswordController));
+router.get("/countUser", makeExpressCallback(countUserController));
 module.exports = router;

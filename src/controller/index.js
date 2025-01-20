@@ -22,6 +22,7 @@ const {
   getAllSubjectScheduleUC,
   addStudentSubjectScheduleUC,
   getStudentSubjectScheduleUC,
+  countUsersUC
 } = require("../use-cases");
 
 //user controller directory
@@ -32,6 +33,7 @@ const updateUserControl = require("./users/updateGuardianController");
 const deleteUserControl = require("./users/deleteUserController");
 const authUserControl = require("./users/authenticateUserController");
 const updatePasswordControl = require("./users/updatePasswordController");
+const countUserControl = require("./users/countUsersController");
 
 // request controller directory
 const createRequestControl = require("./request/createRequestController");
@@ -81,6 +83,7 @@ const authUserController = authUserControl({
 const updatePasswordController = updatePasswordControl({
   updatePasswordUC,
 });
+const countUserController = countUserControl({ countUsersUC })
 
 // request controller execution
 const createRequestController = createRequestControl({
@@ -147,4 +150,5 @@ module.exports = {
   getAllSubjectScheduleController,
   addStudentSubjectController,
   getStudentSubjectScheduleController,
+  countUserController
 };

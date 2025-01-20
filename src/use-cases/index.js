@@ -12,6 +12,7 @@ const updateUser = require("./users/updateUserUC");
 const deleteUser = require("./users/deleteUserUC");
 const authenticateUser = require("./users/authenticateUserUC");
 const updatePassword = require("./users/updatePasswordUC");
+const countUsers = require("./users/countUsers")
 
 // request use-case directory
 const createRequest = require("./request/createRequestUC");
@@ -60,6 +61,7 @@ const authenticateUserUC = authenticateUser({
 const updatePasswordUC = updatePassword({
   userDataAccess,
 });
+const countUsersUC = countUsers({userDataAccess});
 
 // request use-case execution
 const createRequestUC = createRequest({
@@ -117,5 +119,6 @@ module.exports = {
   addSubjectScheduleUC,
   getAllSubjectScheduleUC,
   addStudentSubjectScheduleUC,
-  getStudentSubjectScheduleUC
+  getStudentSubjectScheduleUC,
+  countUsersUC
 };

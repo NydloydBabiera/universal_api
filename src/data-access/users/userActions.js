@@ -15,6 +15,7 @@ module.exports = function userActions({ pool }) {
     loginGuardian,
     getLatestId,
     deleteLogs,
+    countUsers
   });
 
   async function addNewUser(userDetails) {
@@ -331,6 +332,18 @@ module.exports = function userActions({ pool }) {
       let result = await pool.query(sql, param);
 
       return result;
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  }
+
+  async function countUsers(){
+    let sql = `select count(user_id) from user_information`;
+
+    try {
+      let result = await pool.query(sql);
+
+      return result.rows[0];
     } catch (error) {
       console.log("ERROR:", error);
     }

@@ -10,7 +10,9 @@ module.exports = function activityLogsActions({
         createUserLogsOut,
         setCurfewSchedule,
         getCurfew,
-        isScheduleExist
+        isScheduleExist,
+        getUserByRFID,
+        getDateTimeNow
     })
 
     async function getAllLogs() {
@@ -46,18 +48,30 @@ module.exports = function activityLogsActions({
 
     }
 
+    async function getDateTimeNow() {
+        try {
+            let sql = `SELECT TO_CHAR(NOW(), 'YYYY-MM-DD') as dateToday, TO_CHAR(NOW(), 'HH24:MI:SS') as timeNow`
+
+            let result = await pool.query(sql);
+
+            return result.rows;
+        } catch (error) {
+            console.log("ERROR:", error);
+        }
+    }
+
     async function createUserLogs(logDetails) {
         const {
             userId,
             timePunch,
             typeActivity,
-            subject_id
+            subject_schedule_id
         } = logDetails;
 
-        let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity, subject_id)
+        let sql = `INSERT INTO activity_logs(user_id, time_in, activity_date, type_activity, subject_schedule_id)
         VALUES ($1, $3, NOW(), $2, $4) RETURNING *`;
 
-        let param = [userId, typeActivity, timePunch,subject_id];
+        let param = [userId, typeActivity, timePunch, subject_schedule_id];
 
         try {
             let result = await pool.query(sql, param);
@@ -74,7 +88,7 @@ module.exports = function activityLogsActions({
             timePunch,
             typeActivity
         } = logDetails;
-
+console.log(logDetails)
         let sql = `INSERT INTO activity_logs(user_id, time_out, activity_date, type_activity)
         VALUES ($1, $3, NOW(), $2) RETURNING *`;
 
@@ -112,16 +126,14 @@ module.exports = function activityLogsActions({
     async function updateUserLogs(logDetails) {
         const {
             userId,
-            timePunch,
-            dateOut
+            timePunch
         } = logDetails;
         let sql = `update activity_logs
-        set time_out = $2,
-        activity_date = $3
+        set time_out = $2
         where user_id = $1
         and time_out is null RETURNING *;`
 
-        let param = [userId, timePunch, dateOut]
+        let param = [userId, timePunch]
 
         try {
             let result = await pool.query(sql, param);
@@ -161,14 +173,14 @@ module.exports = function activityLogsActions({
         }
     }
 
-    async function isScheduleExist(rfid) {
+    async function isScheduleExist(rfid, room) {
         let sql = `select * from student_subject_matching sched
         inner join user_information student on student.user_id = sched.user_id
         inner join subject_schedule ON subject_schedule.subject_schedule_id = sched.subject_schedule_id
-        where student.rfid = $1 and start_time <= CURRENT_TIME and end_time >= CURRENT_TIME
-        and day_schedule = TRIM(TO_CHAR(CURRENT_DATE, 'Day'))`
+        where student.user_id = $1 and start_time <= CURRENT_TIME and end_time >= CURRENT_TIME
+        and day_schedule = TRIM(TO_CHAR(CURRENT_DATE, 'Day'))  and subject_schedule.room_number = $2`
 
-        let param = [rfid]
+        let param = [rfid, room]
 
         try {
             let result = await pool.query(sql, param);
@@ -179,6 +191,22 @@ module.exports = function activityLogsActions({
         }
 
 
+    }
+
+    async function getUserByRFID(rfid) {
+        let sql = `select * from user_information inf
+        inner join authentication_user auth on auth.user_id = inf.user_id
+        where inf.rfid = $1`
+
+        let param = [rfid]
+
+        try {
+            let result = await pool.query(sql, param);
+
+            return result
+        } catch (error) {
+            console.log("ERROR", error)
+        }
     }
 
 
